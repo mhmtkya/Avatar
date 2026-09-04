@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerStats playerStats;
     private Vector2 movementInput;
-    private float constantSpeedMultiplier = 10f; // Tüm hareket hızlarını oyuna göre scale etmek için çarpılan hız
 
     private void Awake()
     {
@@ -28,7 +27,8 @@ public class PlayerController : MonoBehaviour
         // Anlık güncel yürüme hızını PlayerStats'tan alıyoruz
         float currentSpeed = playerStats.GetStat(StatType.MoveSpeed);
 
+        // Karakter hareketi
         Vector2 movement  = new Vector2(movementInput.x,movementInput.y);
-        rb.MovePosition(rb.position + (movement * Time.fixedDeltaTime * currentSpeed * constantSpeedMultiplier));
+        rb.MovePosition(rb.position + (movement * Time.fixedDeltaTime * currentSpeed));
     }
 }
