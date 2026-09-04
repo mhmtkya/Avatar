@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerStats))]
 public class PlayerController : MonoBehaviour
@@ -16,13 +17,9 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0f;
     }
 
-    private void Update()
+    public void OnMove(InputValue value)
     {
-        // 4 yöne hareket girdilerini alıyoruz
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-
-        movementInput = new Vector2(moveX, moveY).normalized;
+        movementInput = value.Get<Vector2>();
     }
 
     private void FixedUpdate()
@@ -30,7 +27,8 @@ public class PlayerController : MonoBehaviour
         // Anlık güncel yürüme hızını PlayerStats'tan alıyoruz
         float currentSpeed = playerStats.GetStat(StatType.MoveSpeed);
 
-        // Fizik motoru ile hareket
-        rb.linearVelocity = movementInput * currentSpeed;
+        // Karakter hareketi
+        Vector2 movement  = new Vector2(movementInput.x,movementInput.y);
+        rb.MovePosition(rb.position + (movement * Time.fixedDeltaTime * currentSpeed));
     }
 }
