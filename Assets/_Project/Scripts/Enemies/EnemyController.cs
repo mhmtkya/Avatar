@@ -4,6 +4,9 @@ using UnityEngine.Pool;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Drops")]
+    public GameObject xpGemPrefab;
+    
     public EnemyData enemyData;
 
     private float currentHealth;
@@ -66,7 +69,16 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
-        
+        if (xpGemPrefab != null)
+        {
+            GameObject gem = Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
+            
+            XpPickup xpPickup = gem.GetComponent<XpPickup>();
+            if (xpPickup != null)
+            {
+                xpPickup.xpAmount = enemyData.xpDropAmount;
+            }
+        }
         
         if (myPool != null)
             myPool.Release(this);

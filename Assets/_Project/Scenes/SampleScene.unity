@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 46605443}
   - component: {fileID: 46605442}
   - component: {fileID: 46605441}
+  - component: {fileID: 46605449}
+  - component: {fileID: 46605450}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -335,6 +337,36 @@ Transform:
   - {fileID: 356657028}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &46605449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46605440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d39f254c0784443ae0209c1803ba13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerExperience
+  currentLevel: 0
+  currentXp: 0
+  xpToNextLevel: 10
+--- !u!114 &46605450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46605440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415a46216a7d4ace93a8a9959fc32b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollector
+  xpLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &175885181
 GameObject:
   m_ObjectHideFlags: 0

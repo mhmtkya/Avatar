@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Slime
-  maxHealth: 100
+  maxHealth: 10
   moveSpeed: 2
   damageToPlayer: 10
-  xpDropAmount: 0
+  xpDropAmount: 5
   goldDropAmount: 0
