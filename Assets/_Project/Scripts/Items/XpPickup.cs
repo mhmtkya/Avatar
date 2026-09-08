@@ -10,6 +10,14 @@ public class XpPickup : MonoBehaviour
     private Transform playerTransform;
     private float moveSpeed = 5f;
 
+    private void OnEnable()
+    {
+        isFollowing = false;
+        playerTransform = null;
+        moveSpeed = 5f;
+    }
+
+
     public void StartFollowing(Transform player)
     {
         isFollowing = true;
@@ -36,7 +44,7 @@ public class XpPickup : MonoBehaviour
             {
                 playerXp.AddXp(xpAmount);
                 
-                Destroy(gameObject);
+                LootPoolManager.Instance.xpGemPool.Release(gameObject);
             }
         }
     }

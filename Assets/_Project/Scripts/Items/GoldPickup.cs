@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,6 +10,14 @@ public class GoldPickup : MonoBehaviour
     private bool isFollowing = false;
     private Transform playerTransform;
     private float moveSpeed = 5f;
+
+
+    private void OnEnable()
+    {
+        isFollowing = false;
+        moveSpeed = 5f;
+        playerTransform = null;
+    }
 
     public void StartFollowing(Transform player)
     {
@@ -33,7 +42,8 @@ public class GoldPickup : MonoBehaviour
             if (playerGold != null)
             {
                 playerGold.AddGold(goldAmount);
-                Destroy(gameObject);
+                
+                LootPoolManager.Instance.goldGemPool.Release(gameObject);
             }
         }
     }

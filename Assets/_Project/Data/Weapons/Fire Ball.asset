@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54cf4d76ec590fa48b05f5f94b3faa20, type: 3}
-  m_Name: FireArrow
+  m_Name: Fire Ball
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponName: Fire Arrow
-  weaponPrefab: {fileID: 4353710736835873973, guid: ae40099f49051924598fc13cf0f5afb0, type: 3}
-  weaponIcon: {fileID: 933062118876377712, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
+  weaponName: Fire Ball
+  weaponPrefab: {fileID: 4353710736835873973, guid: 34465b8919db2104786d5ff31cd778bc, type: 3}
+  weaponIcon: {fileID: 6572118318277570176, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
   isProjectile: 1
   isExplosive: 0
-  projectilePrefab: {fileID: 4812659323322143021, guid: c1c02dba58bb4304eb6d8485da7e259a, type: 3}
-  projectileSpeed: 20
-  basePiercing: 2
+  projectilePrefab: {fileID: 6127560960219222005, guid: 6beaefcf9589b914cbc1862c4760c83f, type: 3}
+  projectileSpeed: 10
+  basePiercing: 1
   baseRange: 10
-  baseDamage: 10
+  baseDamage: 20
   baseKnockback: 10
-  baseCooldown: 2
+  baseCooldown: 5
   fireScaling: 1
   waterScaling: 0
   airScaling: 0

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa1b126809a4f31849b7d53217522ba, type: 3}
+  m_Name: "Deri Z\u0131rh"
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Data.UpgradeData
+  upgradeName: "Deri Z\u0131rh"
+  description: "Z\u0131rh\u0131na +5"
+  upgradeIcon: {fileID: 0}
+  statToUpgrade: 4
+  increaseAmount: 5

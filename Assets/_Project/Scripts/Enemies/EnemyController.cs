@@ -4,9 +4,7 @@ using UnityEngine.Pool;
 public class EnemyController : MonoBehaviour
 {
     [Header("Drops")]
-    public GameObject xpGemPrefab;
     public GameObject chestPrefab;
-    public GameObject goldPrefab;
     
     public EnemyData enemyData;
 
@@ -87,25 +85,27 @@ public class EnemyController : MonoBehaviour
         }
         
         //gold
-        if (goldPrefab != null)
+        if (LootPoolManager.Instance != null)
         {
             Vector3 goldOffset = (Vector3)Random.insideUnitCircle * 0.3f;
-            GameObject goldGem = Instantiate(goldPrefab, transform.position + goldOffset, Quaternion.identity);
-            GoldPickup goldPickup = goldGem.GetComponent<GoldPickup>();
+            
+            GameObject goldObj = LootPoolManager.Instance.goldGemPool.Get();
+            goldObj.transform.position = transform.position + goldOffset;
+            
+            GoldPickup goldPickup = goldObj.GetComponent<GoldPickup>();
             if (goldPickup != null) goldPickup.goldAmount = enemyData.goldDropAmount;
         }
         
         //xp
-        if (xpGemPrefab != null)
+        if (LootPoolManager.Instance != null)
         {
             Vector3 xpOffset = (Vector3)Random.insideUnitCircle * 0.3f;
-            GameObject xpGem = Instantiate(xpGemPrefab, transform.position + xpOffset, Quaternion.identity);
             
-            XpPickup xpPickup = xpGem.GetComponent<XpPickup>();
-            if (xpPickup != null)
-            {
-                xpPickup.xpAmount = enemyData.xpDropAmount;
-            }
+            GameObject xpObj = LootPoolManager.Instance.xpGemPool.Get();
+            xpObj.transform.position = transform.position + xpOffset;
+                
+            XpPickup xpPickup = xpObj.GetComponent<XpPickup>();
+            if (xpPickup != null) xpPickup.xpAmount = enemyData.xpDropAmount;
         }
         
         //Havuza Dönme

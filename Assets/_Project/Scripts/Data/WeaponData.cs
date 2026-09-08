@@ -4,6 +4,8 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public string weaponName;
+    public GameObject weaponPrefab;
+    public Sprite weaponIcon;
     
     [Header("Bools")]
     public bool isProjectile;

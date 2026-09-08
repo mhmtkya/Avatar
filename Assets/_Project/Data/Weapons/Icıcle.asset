@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54cf4d76ec590fa48b05f5f94b3faa20, type: 3}
-  m_Name: FireArrow
+  m_Name: "Ic\u0131cle"
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponName: Fire Arrow
-  weaponPrefab: {fileID: 4353710736835873973, guid: ae40099f49051924598fc13cf0f5afb0, type: 3}
-  weaponIcon: {fileID: 933062118876377712, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
+  weaponName: Icicle
+  weaponPrefab: {fileID: 3363413369963792118, guid: e0c44553992988546843d4dda77adc4f, type: 3}
+  weaponIcon: {fileID: -3872003239498209718, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
   isProjectile: 1
   isExplosive: 0
-  projectilePrefab: {fileID: 4812659323322143021, guid: c1c02dba58bb4304eb6d8485da7e259a, type: 3}
-  projectileSpeed: 20
-  basePiercing: 2
+  projectilePrefab: {fileID: 6127560960219222005, guid: c27c0c2f237f11544bf33ada33d893c7, type: 3}
+  projectileSpeed: 30
+  basePiercing: 1
   baseRange: 10
-  baseDamage: 10
+  baseDamage: 3
   baseKnockback: 10
-  baseCooldown: 2
-  fireScaling: 1
-  waterScaling: 0
+  baseCooldown: 0.5
+  fireScaling: 0
+  waterScaling: 1
   airScaling: 0
   earthScaling: 0

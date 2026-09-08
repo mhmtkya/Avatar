@@ -31,8 +31,11 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         // Mermiyi ileri doğru hareket ettir
-        transform.Translate(moveDirection * speed * Time.deltaTime);
-
+        transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+        
+        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) *  Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0,0,angle);
+        
         if(Vector2.Distance(transform.position, origin) > range)
         {
             ReturnToPool();

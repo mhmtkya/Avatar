@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Managers;
 using UnityEngine;
 
 public class PlayerExperience : MonoBehaviour
@@ -32,6 +33,8 @@ public class PlayerExperience : MonoBehaviour
         currentLevel++;
 
         xpToNextLevel = xpToNextLevel * 1.5f;
+        
+        LevelUpManager.Instance.ShowLevelUpMenu(GetComponent<PlayerStats>());
 
     }
     
