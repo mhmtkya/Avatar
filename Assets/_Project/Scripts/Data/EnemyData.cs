@@ -9,4 +9,5 @@ public class EnemyData : ScriptableObject
     public float damageToPlayer;
     public int xpDropAmount;
     public int goldDropAmount;
+    public float chestDropChance;
 }

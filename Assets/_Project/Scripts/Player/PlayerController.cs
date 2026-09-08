@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         movementInput = value.Get<Vector2>();
+        if (movementInput.x > 0) transform.localScale = new Vector3(1, 1, 1);
+        else if (movementInput.x < 0) transform.localScale = new Vector3(-1, 1, 1);
+        
+        Debug.Log(movementInput);
     }
 
     private void FixedUpdate()

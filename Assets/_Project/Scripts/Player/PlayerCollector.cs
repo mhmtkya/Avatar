@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerCollector : MonoBehaviour
 {
-    public LayerMask xpLayer;
+    public LayerMask itemLayer;
     
     private PlayerStats playerStats;
     private float checkInterval = 0.15f;
@@ -22,24 +22,31 @@ public class PlayerCollector : MonoBehaviour
 
         if (timer <= 0f)
         {
-            checkForXp();
+            checkForItems();
             timer = checkInterval;
         }
     }
 
-    private void checkForXp()
+    private void checkForItems()
     {
         float currentRange = playerStats.GetStat(StatType.PickupRange);
         
-        Collider2D[] xps = Physics2D.OverlapCircleAll(transform.position, currentRange, xpLayer);
+        Collider2D[] items = Physics2D.OverlapCircleAll(transform.position, currentRange, itemLayer);
 
-        foreach (Collider2D xpCollider in xps)
+        foreach (Collider2D itemCollider in items)
         {
-            XpPickup xp = xpCollider.GetComponent<XpPickup>();
-
+            
+            XpPickup xp = itemCollider.GetComponent<XpPickup>();
             if (xp != null)
             {
                 xp.StartFollowing(transform);
+                continue;
+            }
+            
+            GoldPickup gold = itemCollider.GetComponent<GoldPickup>();
+            if (gold != null)
+            {
+                gold.StartFollowing(transform);
             }
         }
     }

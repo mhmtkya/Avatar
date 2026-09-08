@@ -18,3 +18,4 @@ MonoBehaviour:
   damageToPlayer: 10
   xpDropAmount: 5
   goldDropAmount: 0
+  chestDropChance: 1

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -6,6 +5,8 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Drops")]
     public GameObject xpGemPrefab;
+    public GameObject chestPrefab;
+    public GameObject goldPrefab;
     
     public EnemyData enemyData;
 
@@ -69,20 +70,46 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        //sandık şans hesaplama
+        float finalChestChance = enemyData.chestDropChance;
+
+        if (playerTarget != null)
+        {
+            PlayerStats playerstats = playerTarget.GetComponent<PlayerStats>();
+            if (playerstats != null)
+                finalChestChance *= playerstats.GetStat(StatType.Luck);
+        }
+
+        //sandık
+        if (Random.value <= finalChestChance && chestPrefab != null)
+        {
+            Instantiate(chestPrefab, transform.position, Quaternion.identity);
+        }
+        
+        //gold
+        if (goldPrefab != null)
+        {
+            Vector3 goldOffset = (Vector3)Random.insideUnitCircle * 0.3f;
+            GameObject goldGem = Instantiate(goldPrefab, transform.position + goldOffset, Quaternion.identity);
+            GoldPickup goldPickup = goldGem.GetComponent<GoldPickup>();
+            if (goldPickup != null) goldPickup.goldAmount = enemyData.goldDropAmount;
+        }
+        
+        //xp
         if (xpGemPrefab != null)
         {
-            GameObject gem = Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
+            Vector3 xpOffset = (Vector3)Random.insideUnitCircle * 0.3f;
+            GameObject xpGem = Instantiate(xpGemPrefab, transform.position + xpOffset, Quaternion.identity);
             
-            XpPickup xpPickup = gem.GetComponent<XpPickup>();
+            XpPickup xpPickup = xpGem.GetComponent<XpPickup>();
             if (xpPickup != null)
             {
                 xpPickup.xpAmount = enemyData.xpDropAmount;
             }
         }
         
-        if (myPool != null)
-            myPool.Release(this);
-        else
-            Destroy(gameObject);
+        //Havuza Dönme
+        if (myPool != null) myPool.Release(this);
+        else Destroy(gameObject);
     }
 }

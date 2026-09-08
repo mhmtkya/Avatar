@@ -33,7 +33,7 @@ MonoBehaviour:
   - statType: 7
     baseValue: 1
   - statType: 8
-    baseValue: 0
+    baseValue: 1
   - statType: 9
     baseValue: 1
   - statType: 10
