@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Data;
+﻿using System;
+using _Project.Scripts.Data;
 using _Project.Scripts.Managers;
 using TMPro;
 using UnityEngine;
@@ -13,33 +14,42 @@ namespace _Project.Scripts.UI
         public TextMeshProUGUI descText;
         public Image iconImage;
         public Button cardButton;
-
+        public Animator animator;
+        
         private UpgradeData myUpgrade;
-        private WeaponData myWeapon;
 
-        public void SetupWeaponCard(WeaponData weaponData)
+        private void Start()
         {
-            myWeapon = weaponData;
-
-            nameText.text = myWeapon.weaponName;
-            descText.text = "Hasar: " + myWeapon.baseDamage;
-
-            if (myWeapon.weaponIcon != null)
-                iconImage.sprite = myWeapon.weaponIcon;
-            
-            cardButton.onClick.RemoveAllListeners();
-            cardButton.onClick.AddListener(OnWeaponCardClicked);
-
+            nameText.gameObject.SetActive(false);
+            descText.gameObject.SetActive(false);
+            iconImage.gameObject.SetActive(false);
+            animator = GetComponent<Animator>();
         }
 
-        private void OnWeaponCardClicked()
+        private void OnDisable()
         {
-            WeaponSelectionManager.Instance.SelectWeapon(myWeapon);
+            nameText.gameObject.SetActive(false);
+            descText.gameObject.SetActive(false);
+            iconImage.gameObject.SetActive(false);
+        }
+
+        public void SetupCard(UpgradeData upgradeData)
+        {
+            animator.Play("button");
+            myUpgrade = upgradeData;
+        }
+
+        public void OnComplete()
+        {
+            nameText.gameObject.SetActive(true);
+            descText.gameObject.SetActive(true);
+            iconImage.gameObject.SetActive(true);
+            SetupCardAfterAnim();
+            
         }
         
-        public void SetupCard(UpgradeData upgrade)
+        public void SetupCardAfterAnim()
         {
-            myUpgrade = upgrade;
             nameText.text = myUpgrade.upgradeName;
             descText.text = myUpgrade.description;
 

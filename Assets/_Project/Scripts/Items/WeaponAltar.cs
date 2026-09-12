@@ -7,9 +7,19 @@ namespace _Project.Scripts.Items
 {
     public class WeaponAltar : MonoBehaviour
     {
+        public Sprite usedSprite;
         public InputActionReference interactAction;
+
+        private Animator animator;
+        private SpriteRenderer  spriteRenderer;
         private bool isPlayerInRange = false;
         private bool isUsed = false;
+
+        private void Awake()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
+        }
 
         private void OnEnable()
         {
@@ -47,6 +57,8 @@ namespace _Project.Scripts.Items
                 isUsed = true;
                 WeaponSelectionManager.Instance.ShowWeaponMenu();
                 
+                animator.enabled = false;
+                spriteRenderer.sprite = usedSprite;
                 GetComponent<Collider2D>().enabled = false;
             }
         }

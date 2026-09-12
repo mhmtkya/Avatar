@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54cf4d76ec590fa48b05f5f94b3faa20, type: 3}
+  m_Name: Punch
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Punch
+  weaponPrefab: {fileID: 4353710736835873973, guid: 9748c837d83a60f4ebc928ceeab66ab2, type: 3}
+  weaponIcon: {fileID: -3872003239498209718, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
+  weaponType: 1
+  isExplosive: 0
+  projectilePrefab: {fileID: 5109853145111990996, guid: d8ace2564efff884983ecb8c172ceca5, type: 3}
+  projectileSpeed: 0
+  statsPerLevel:
+  - basePiercing: 0
+    baseRange: 2
+    explosionRadius: 0
+    baseDamage: 20
+    baseKnockback: 50
+    baseCooldown: 2
+    fireScaling: 0
+    waterScaling: 0
+    airScaling: 0
+    earthScaling: 1
+    levelDescription: 

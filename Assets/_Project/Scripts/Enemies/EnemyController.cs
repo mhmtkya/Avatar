@@ -1,16 +1,37 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
     [Header("Drops")]
     public GameObject chestPrefab;
     
+    [Header("Damage Flash Settings")]
+    private SpriteRenderer spriteRenderer;
+    private Material originalMaterial;
+    public Material flashMaterial;
+    public float flashDuration = 0.1f;
+    
+    private Coroutine flashRoutine = null;
+    
     public EnemyData enemyData;
-
     private float currentHealth;
     private Transform playerTarget;
     private IObjectPool<EnemyController> myPool;
+
+
+    private Rigidbody2D rb;
+    private bool isKnockedBack = false;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) originalMaterial = spriteRenderer.material;
+    }
 
     public void SetPool(IObjectPool<EnemyController> pool)
     {
@@ -19,9 +40,12 @@ public class EnemyController : MonoBehaviour
     
     private void OnEnable()
     {
+        if(flashRoutine != null) StopCoroutine(flashRoutine); flashRoutine = null;
+        
+        if(spriteRenderer != null && originalMaterial!=null) spriteRenderer.material = originalMaterial;
+
         currentHealth = enemyData.maxHealth;
-
-
+            
         if (playerTarget == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -32,9 +56,12 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isKnockedBack) return;
         if (playerTarget != null)
         {
             transform.position = Vector2.MoveTowards(transform.position,playerTarget.position,enemyData.moveSpeed * Time.deltaTime);
+            
+            transform.localScale = ((transform.position - playerTarget.position).normalized.x < 0) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
         }
     }
 
@@ -52,18 +79,62 @@ public class EnemyController : MonoBehaviour
                 {
                     player.TakeDamage(enemyData.damageToPlayer);
                     lastDamageTime = Time.time;
+                    
                 }
             }
         }
     }
 
+    public void ApplyKnockback(Vector2 atackerPos, float knockbackForce)
+    {
+        if(knockbackForce <= 0 || rb == null ) return;
+        
+        Vector2 knockbackDirection = ((Vector2)transform.position - atackerPos).normalized;
+        
+        StopCoroutine("KnockbackRoutine");
+        StartCoroutine(KnockbackRoutine(knockbackDirection, knockbackForce));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector2 direction, float knockbackForce)
+    {
+        isKnockedBack = true;
+
+        float pushDuration = 0.15f;
+        float timer = 0;
+
+        while (timer < pushDuration)
+        {
+            transform.Translate(direction * knockbackForce * (1f- (timer / pushDuration)) *  Time.deltaTime, Space.World);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        
+        isKnockedBack = false;
+
+    }
 
     public void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
-
+        
+        if (spriteRenderer != null)
+        {
+            if(flashRoutine != null) StopCoroutine(flashRoutine);
+            flashRoutine = StartCoroutine(FlashRoutine());
+        }
+        
         if (currentHealth <= 0)
             Die();
+    }
+
+    private IEnumerator FlashRoutine()
+    {
+        if(flashMaterial != null) spriteRenderer.material = flashMaterial;
+        
+        yield  return new WaitForSeconds(flashDuration);
+        
+        spriteRenderer.material = originalMaterial;
+        flashRoutine =  null;
     }
 
     private void Die()

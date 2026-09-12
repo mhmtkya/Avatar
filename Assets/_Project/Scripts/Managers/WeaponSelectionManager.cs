@@ -11,7 +11,7 @@ namespace _Project.Scripts.Managers
 
         [Header("UI Elements")] 
         public GameObject weaponSelectionCanvas;
-        public LevelUpCard[] weaponCards;
+        public WeaponLevelCard[] weaponCards;
         
         [Header("Database")]
         public List<WeaponData> allWeaponsInGame;
@@ -36,15 +36,23 @@ namespace _Project.Scripts.Managers
 
             if (WeaponInventoryManager.Instance.HasEmptySlot())
             {
-                availablePool.AddRange(allWeaponsInGame);
+                foreach (WeaponData w in allWeaponsInGame)
+                {
+                    if(WeaponInventoryManager.Instance.GetCurrentWeaponLevel(w) < w.MaxLevel)
+                        availablePool.Add(w);
+                }
                 
             }
             else
             {
-                availablePool.AddRange(WeaponInventoryManager.Instance.equippedWeapons);
+                foreach (WeaponData w in WeaponInventoryManager.Instance.equippedWeapons)
+                {
+                    if(WeaponInventoryManager.Instance.GetCurrentWeaponLevel(w)  < w.MaxLevel)
+                        availablePool.Add(w);
+                }
             }
 
-            foreach (LevelUpCard card in weaponCards)
+            foreach (WeaponLevelCard card in weaponCards)
             {
                 if (availablePool.Count == 0)
                 {
@@ -52,10 +60,10 @@ namespace _Project.Scripts.Managers
                     continue;
                 }
                 
-                card.gameObject.SetActive(true);
-                
                 int randomIndex = UnityEngine.Random.Range(0, availablePool.Count);
                 WeaponData selectedWeapon = availablePool[randomIndex];
+                
+                card.gameObject.SetActive(true);
                 
                 card.SetupWeaponCard(selectedWeapon);
                 availablePool.RemoveAt(randomIndex);

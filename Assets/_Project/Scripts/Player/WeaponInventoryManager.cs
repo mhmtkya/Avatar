@@ -22,6 +22,15 @@ public class WeaponInventoryManager : MonoBehaviour
     {
         if (equippedWeapons.Contains(newWeapon))
         {
+            WeaponController[] activeWeapons = weaponParent.GetComponentsInChildren<WeaponController>();
+            foreach (WeaponController w in activeWeapons)
+            {
+                if (w.weaponData == newWeapon)
+                {
+                    w.LevelUpWeapon();
+                    break;
+                }
+            }
             return;
         }
 
@@ -36,11 +45,30 @@ public class WeaponInventoryManager : MonoBehaviour
         {
             GameObject spawnedWeapon = Instantiate(newWeapon.weaponPrefab, weaponParent);
             spawnedWeapon.name = newWeapon.weaponName;
-            
+
+            WeaponController controller = spawnedWeapon.GetComponent<WeaponController>();
+            if (controller != null) controller.weaponData = newWeapon;
+
         }
     }
     public bool HasEmptySlot()
     {
         return equippedWeapons.Count < maxWeaponSlot;
+    }
+
+    public int GetCurrentWeaponLevel(WeaponData weaponData)
+    {
+        if (equippedWeapons.Contains(weaponData))
+        {
+            WeaponController[] activeWeapons = weaponParent.GetComponentsInChildren<WeaponController>();
+            foreach (WeaponController weapon in activeWeapons)
+            {
+                if (weapon.weaponData == weaponData)
+                {
+                    return weapon.currentLevel;
+                }
+            }
+        }
+        return 0;
     }
 }

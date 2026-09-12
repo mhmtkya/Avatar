@@ -10,22 +10,39 @@ public class Projectile : MonoBehaviour
     private float speed;
     private float damage;
     private float range;
+    private float rangeSquared;
     private int piercing;
+    private float knockBack;
     private Vector2 origin;
     private Vector2 moveDirection;
+
+    private bool isExplosive;
+    private float explosiveRange;
     
     
     // Silah bu mermiyi havuzdan çektiğinde ona ayarlarını vermek için çağıracak
-    public void Initialize(IObjectPool<Projectile> pool, float projSpeed, Vector2 projDirection, float projDamage, float projRange, int projPiercing, Vector2 projOrigin)
+    public void Initialize(IObjectPool<Projectile> pool, Vector2 projDirection,Vector2 projOrigin, float finalDamage, WeaponData data, WeaponData.WeaponLevelStats levelStats )
     {
         myPool = pool;
-        speed = projSpeed;
-        damage = projDamage;
-        range = projRange;
-        origin = projOrigin;
         moveDirection = projDirection;
-        piercing = projPiercing;
+        origin = projOrigin;
+        damage = finalDamage;
+        
+        speed = data.projectileSpeed;
+        piercing = levelStats.basePiercing;
+        knockBack = levelStats.baseKnockback;
+        range = levelStats.baseRange;
+        rangeSquared = range * range;
+        
+        
+        isExplosive = data.isExplosive;
+        explosiveRange = levelStats.explosionRadius;
+        
         hitEnemies.Clear();
+        
+        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) *  Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0,0,angle);
+        
     }
 
     private void Update()
@@ -33,10 +50,7 @@ public class Projectile : MonoBehaviour
         // Mermiyi ileri doğru hareket ettir
         transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
         
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) *  Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0,0,angle);
-        
-        if(Vector2.Distance(transform.position, origin) > range)
+        if(((Vector2)transform.position - origin).sqrMagnitude > rangeSquared)
         {
             ReturnToPool();
         }
@@ -54,14 +68,29 @@ public class Projectile : MonoBehaviour
             {
                 hitEnemies.Add(enemyID);
 
-                EnemyController enemy = collision.GetComponent<EnemyController>();
-                enemy.TakeDamage(damage);
-                
-                piercing--; 
-                if (piercing <= 0)
+                if (isExplosive) Explode();
+                else
                 {
-                    ReturnToPool();
+                    EnemyController enemy = collision.GetComponent<EnemyController>();
+                    if (enemy != null) enemy.TakeDamage(damage); enemy.ApplyKnockback(transform.position, knockBack);
                 }
+
+                piercing--; 
+                if (piercing <= 0) ReturnToPool();
+            }
+        }
+    }
+
+    private void Explode()
+    {
+        Collider2D[] enemiesInRadius = Physics2D.OverlapCircleAll(transform.position, explosiveRange);
+
+        foreach (Collider2D hit in enemiesInRadius)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                EnemyController enemy = hit.GetComponent<EnemyController>();
+                if (enemy != null) enemy.TakeDamage(damage);
             }
         }
     }

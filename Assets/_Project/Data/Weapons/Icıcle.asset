@@ -15,16 +15,56 @@ MonoBehaviour:
   weaponName: Icicle
   weaponPrefab: {fileID: 3363413369963792118, guid: e0c44553992988546843d4dda77adc4f, type: 3}
   weaponIcon: {fileID: -3872003239498209718, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
-  isProjectile: 1
+  weaponType: 0
   isExplosive: 0
   projectilePrefab: {fileID: 6127560960219222005, guid: c27c0c2f237f11544bf33ada33d893c7, type: 3}
   projectileSpeed: 30
-  basePiercing: 1
-  baseRange: 10
-  baseDamage: 3
-  baseKnockback: 10
-  baseCooldown: 0.5
-  fireScaling: 0
-  waterScaling: 1
-  airScaling: 0
-  earthScaling: 0
+  statsPerLevel:
+  - basePiercing: 3
+    baseRange: 700
+    explosionRadius: 0
+    baseDamage: 20
+    baseKnockback: 20
+    baseCooldown: 1
+    fireScaling: 0
+    waterScaling: 1
+    airScaling: 0
+    earthScaling: 0
+    levelDescription: 'Piercing: 3
+
+      Damage: 20
+
+'
+  - basePiercing: 2
+    baseRange: 800
+    explosionRadius: 0
+    baseDamage: 30
+    baseKnockback: 0
+    baseCooldown: 0.8
+    fireScaling: 0
+    waterScaling: 1.2
+    airScaling: 0
+    earthScaling: 0
+    levelDescription: 
+  - basePiercing: 3
+    baseRange: 850
+    explosionRadius: 0
+    baseDamage: 40
+    baseKnockback: 0
+    baseCooldown: 0.7
+    fireScaling: 0
+    waterScaling: 1.3
+    airScaling: 0
+    earthScaling: 0
+    levelDescription: 
+  - basePiercing: 4
+    baseRange: 900
+    explosionRadius: 0
+    baseDamage: 50
+    baseKnockback: 0
+    baseCooldown: 0.6
+    fireScaling: 0
+    waterScaling: 1.5
+    airScaling: 0
+    earthScaling: 0
+    levelDescription: 
