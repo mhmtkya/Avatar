@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
 
     private bool isExplosive;
     private float explosiveRange;
-    
+    private GameObject explosionEffect;
     
     // Silah bu mermiyi havuzdan çektiğinde ona ayarlarını vermek için çağıracak
     public void Initialize(IObjectPool<Projectile> pool, Vector2 projDirection,Vector2 projOrigin, float finalDamage, WeaponData data, WeaponData.WeaponLevelStats levelStats )
@@ -33,7 +33,8 @@ public class Projectile : MonoBehaviour
         knockBack = levelStats.baseKnockback;
         range = levelStats.baseRange;
         rangeSquared = range * range;
-        
+
+        explosionEffect = data.explosionVFX;
         
         isExplosive = data.isExplosive;
         explosiveRange = levelStats.explosionRadius;
@@ -67,7 +68,10 @@ public class Projectile : MonoBehaviour
             if (!hitEnemies.Contains(enemyID))
             {
                 hitEnemies.Add(enemyID);
-
+                if (explosionEffect != null)
+                {
+                    Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                }
                 if (isExplosive) Explode();
                 else
                 {
@@ -89,6 +93,7 @@ public class Projectile : MonoBehaviour
         {
             if (hit.CompareTag("Enemy"))
             {
+                
                 EnemyController enemy = hit.GetComponent<EnemyController>();
                 if (enemy != null) enemy.TakeDamage(damage);
             }

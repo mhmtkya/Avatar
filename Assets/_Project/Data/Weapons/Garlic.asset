@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54cf4d76ec590fa48b05f5f94b3faa20, type: 3}
-  m_Name: Punch
+  m_Name: Garlic
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponName: Punch
-  weaponPrefab: {fileID: 4353710736835873973, guid: 9748c837d83a60f4ebc928ceeab66ab2, type: 3}
+  weaponName: Garlic
+  weaponPrefab: {fileID: 3813396106045587125, guid: b247f66684827804c8ff48646b064853, type: 3}
   weaponIcon: {fileID: -3872003239498209718, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
-  spawnPrefab: {fileID: 5109853145111990996, guid: d8ace2564efff884983ecb8c172ceca5, type: 3}
+  spawnPrefab: {fileID: 3367073171138504970, guid: 6880ea45c37d1b74eaca86c69e8e9da6, type: 3}
   explosionVFX: {fileID: 0}
-  weaponType: 1
+  weaponType: 2
   isExplosive: 0
   isBumerang: 0
   projectileSpeed: 0
   statsPerLevel:
   - basePiercing: 0
-    baseRange: 2
+    baseRange: 5
     explosionRadius: 0
-    baseDamage: 20
-    baseKnockback: 50
-    baseCooldown: 2
+    baseDamage: 10
+    baseKnockback: 2
+    baseCooldown: 0.3
     fireScaling: 0
     waterScaling: 0
     airScaling: 0

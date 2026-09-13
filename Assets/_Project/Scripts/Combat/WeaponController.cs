@@ -14,13 +14,14 @@ public class WeaponController : MonoBehaviour
     private PlayerStats playerStats;
     private float currentCooldown;
 
-    private IObjectPool<Projectile> projectilePool; 
+    private IObjectPool<Projectile> projectilePool;
+
+    private AuraWeapon activeAura;
     
     private void Start()
     {
         // Oyuncunun üzerindeki statları bul (Silahlar genelde oyuncunun alt objesi (child) olur)
         playerStats = GetComponentInParent<PlayerStats>();
-        currentCooldown = GetCurrentLevelStats().baseCooldown;
         
         //Havuz
         projectilePool = new ObjectPool<Projectile>(
@@ -31,6 +32,10 @@ public class WeaponController : MonoBehaviour
             defaultCapacity: 50,
             maxSize: 300
         );
+
+        if (weaponData.weaponType == WeaponData.WeaponType.Aura) SpawnAura();
+        else currentCooldown = GetCurrentLevelStats().baseCooldown;
+        
     }
 
     public void LevelUpWeapon()
@@ -39,13 +44,12 @@ public class WeaponController : MonoBehaviour
         {
             currentLevel++;
             Debug.Log($"🔥 {weaponData.weaponName} güçlendi! Yeni Seviye: {currentLevel}");
+
         }
-        else
-            Debug.Log($"{weaponData.weaponName} zaten MAKSİMUM seviyede!");
         
     }
 
-    private WeaponData.WeaponLevelStats GetCurrentLevelStats()
+    public WeaponData.WeaponLevelStats GetCurrentLevelStats()
     {
         int index = Mathf.Clamp(currentLevel -1, 0, weaponData.statsPerLevel.Count - 1);
         return weaponData.statsPerLevel[index];
@@ -53,6 +57,8 @@ public class WeaponController : MonoBehaviour
 
     private void Update()
     {
+        if(weaponData.weaponType == WeaponData.WeaponType.Aura) return;
+        
         currentCooldown -= Time.deltaTime;
 
         if (currentCooldown <= 0f)
@@ -69,11 +75,7 @@ public class WeaponController : MonoBehaviour
                 case WeaponData.WeaponType.Melee:
                     HitMelee(target);
                     break;
-                case WeaponData.WeaponType.Aura:
-                    break;
-                
             }
-            
         }
     }
 
@@ -125,7 +127,7 @@ public class WeaponController : MonoBehaviour
         float angle = Mathf.Atan2(attackDirection.x, attackDirection.y)  * Mathf.Rad2Deg;
         quaternion rotation = Quaternion.Euler(0,0,angle - 90);
         
-        GameObject meleeObj = Instantiate(weaponData.projectilePrefab, spawnPosition, rotation);
+        GameObject meleeObj = Instantiate(weaponData.spawnPrefab, spawnPosition, rotation);
 
         meleeObj.transform.localScale = new Vector3(currentLevelStats.baseRange, currentLevelStats.baseRange, 1);
         MeleeHitbox hitbox = meleeObj.GetComponent<MeleeHitbox>();
@@ -148,12 +150,30 @@ public class WeaponController : MonoBehaviour
         WeaponData.WeaponLevelStats currentLevelStats = GetCurrentLevelStats();
         
         // 2. Nihai hasarı hesapla: Silahın Taban Hasarı * Oyuncunun Hasar Çarpanı
-        float finalDamage = playerStats.GetStat(StatType.Damage)* (currentLevelStats.baseDamage + (currentLevelStats.fireScaling * playerStats.GetStat(StatType.FirePower)) + (currentLevelStats.airScaling* playerStats.GetStat(StatType.AirPower)) + (currentLevelStats.earthScaling * playerStats.GetStat(StatType.EarthPower)) + (currentLevelStats.waterScaling * playerStats.GetStat(StatType.WaterPower)));
-        
+        float finalDamage = CalculateFinalDamage(playerStats, currentLevelStats);
         proj.Initialize(projectilePool, fireDirection, transform.position, finalDamage, weaponData, currentLevelStats);
         
         ResetCooldown();
     }
+
+    private void SpawnAura()
+    {
+        GameObject auraObj = Instantiate(weaponData.spawnPrefab, transform.position, Quaternion.identity);
+        
+        auraObj.transform.SetParent(this.transform);
+
+        activeAura = auraObj.GetComponent<AuraWeapon>();
+        
+        activeAura.Initialize(this, playerStats, weaponData);
+
+    }
+
+    private float CalculateFinalDamage(PlayerStats currentPlayerStats, WeaponData.WeaponLevelStats currentLevelStats)
+    {
+        return currentPlayerStats.GetStat(StatType.Damage)* (currentLevelStats.baseDamage + (currentLevelStats.fireScaling * playerStats.GetStat(StatType.FirePower)) + (currentLevelStats.airScaling* playerStats.GetStat(StatType.AirPower)) + (currentLevelStats.earthScaling * playerStats.GetStat(StatType.EarthPower)) + (currentLevelStats.waterScaling * playerStats.GetStat(StatType.WaterPower)));
+
+    }
+    
     
     private void ResetCooldown()
     {
@@ -165,7 +185,7 @@ public class WeaponController : MonoBehaviour
 
     private Projectile CreateProjectile()
     {
-        GameObject obj = Instantiate(weaponData.projectilePrefab);
+        GameObject obj = Instantiate(weaponData.spawnPrefab);
         return obj.GetComponent<Projectile>();
     }
 

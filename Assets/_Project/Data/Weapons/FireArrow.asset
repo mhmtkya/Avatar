@@ -15,9 +15,11 @@ MonoBehaviour:
   weaponName: Fire Arrow
   weaponPrefab: {fileID: 4353710736835873973, guid: ae40099f49051924598fc13cf0f5afb0, type: 3}
   weaponIcon: {fileID: 933062118876377712, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
-  isProjectile: 1
+  spawnPrefab: {fileID: 4812659323322143021, guid: c1c02dba58bb4304eb6d8485da7e259a, type: 3}
+  explosionVFX: {fileID: 0}
+  weaponType: 0
   isExplosive: 0
-  projectilePrefab: {fileID: 4812659323322143021, guid: c1c02dba58bb4304eb6d8485da7e259a, type: 3}
+  isBumerang: 0
   projectileSpeed: 20
   statsPerLevel:
   - basePiercing: 1

@@ -90,9 +90,12 @@ public class EnemyController : MonoBehaviour
         if(knockbackForce <= 0 || rb == null ) return;
         
         Vector2 knockbackDirection = ((Vector2)transform.position - atackerPos).normalized;
+        float realKnockbackForce = knockbackForce - (knockbackForce * enemyData.knockBackResistance);
+        
+        if(realKnockbackForce == 0) return;
         
         StopCoroutine("KnockbackRoutine");
-        StartCoroutine(KnockbackRoutine(knockbackDirection, knockbackForce));
+        StartCoroutine(KnockbackRoutine(knockbackDirection, realKnockbackForce));
     }
 
     private IEnumerator KnockbackRoutine(Vector2 direction, float knockbackForce)

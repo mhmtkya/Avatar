@@ -15,12 +15,14 @@ MonoBehaviour:
   weaponName: Fire Ball
   weaponPrefab: {fileID: 4353710736835873973, guid: 34465b8919db2104786d5ff31cd778bc, type: 3}
   weaponIcon: {fileID: 6572118318277570176, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
+  spawnPrefab: {fileID: 6127560960219222005, guid: 6beaefcf9589b914cbc1862c4760c83f, type: 3}
+  explosionVFX: {fileID: 8307801243960277872, guid: c845aef159d4cc1489bc050c4d6f11cd, type: 3}
   weaponType: 0
   isExplosive: 1
-  projectilePrefab: {fileID: 6127560960219222005, guid: 6beaefcf9589b914cbc1862c4760c83f, type: 3}
+  isBumerang: 0
   projectileSpeed: 10
   statsPerLevel:
-  - basePiercing: 3
+  - basePiercing: 1
     baseRange: 500
     explosionRadius: 3
     baseDamage: 30

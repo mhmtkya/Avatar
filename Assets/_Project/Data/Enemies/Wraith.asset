@@ -19,3 +19,4 @@ MonoBehaviour:
   xpDropAmount: 10
   goldDropAmount: 30
   chestDropChance: 0.3
+  knockBackResistance: 1

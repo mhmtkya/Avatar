@@ -32,6 +32,8 @@ public class WeaponData : ScriptableObject
     public string weaponName;
     public GameObject weaponPrefab;
     public Sprite weaponIcon;
+    public GameObject spawnPrefab;
+    public GameObject explosionVFX;
     
     public enum WeaponType
     {
@@ -44,10 +46,10 @@ public class WeaponData : ScriptableObject
     
     [Header("Bools")]
     public bool isExplosive;
+    public bool isBumerang;
     
     
     [Header("Projectile")]
-    public GameObject projectilePrefab;
     public float projectileSpeed;
 
     [Header("Level Stats")] public List<WeaponLevelStats> statsPerLevel;

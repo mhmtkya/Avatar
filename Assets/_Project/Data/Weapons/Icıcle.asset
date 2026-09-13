@@ -15,9 +15,11 @@ MonoBehaviour:
   weaponName: Icicle
   weaponPrefab: {fileID: 3363413369963792118, guid: e0c44553992988546843d4dda77adc4f, type: 3}
   weaponIcon: {fileID: -3872003239498209718, guid: 119f938bf5759a74ea920da11be4bbe6, type: 3}
+  spawnPrefab: {fileID: 6127560960219222005, guid: c27c0c2f237f11544bf33ada33d893c7, type: 3}
+  explosionVFX: {fileID: 8307801243960277872, guid: c845aef159d4cc1489bc050c4d6f11cd, type: 3}
   weaponType: 0
   isExplosive: 0
-  projectilePrefab: {fileID: 6127560960219222005, guid: c27c0c2f237f11544bf33ada33d893c7, type: 3}
+  isBumerang: 0
   projectileSpeed: 30
   statsPerLevel:
   - basePiercing: 3
